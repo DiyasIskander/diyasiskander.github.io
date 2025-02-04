@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI vs Human Music Quiz</title>
   <style>
     body {
@@ -11,18 +12,33 @@
       padding: 20px;
       background: #f2f2f2;
     }
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
     #quizContainer, #summaryContainer {
       display: none;
       margin-top: 20px;
+      padding: 10px;
     }
     button {
       padding: 15px 30px;
       margin: 10px;
-      font-size: 18px;
+      font-size: 1em;
       cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: #fff;
+      transition: background-color 0.3s ease;
+    }
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
     }
     .answerBtn {
-      width: 200px;
+      width: 80%;
+      max-width: 300px;
     }
     .red {
       background-color: red !important;
@@ -31,6 +47,16 @@
     .green {
       background-color: green !important;
       color: white;
+    }
+    audio {
+      width: 100%;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+    @media (min-width: 600px) {
+      button {
+        font-size: 1.1em;
+      }
     }
     #feedback {
       font-size: 20px;
@@ -128,6 +154,7 @@
     function answerClicked(answer) {
       // Stop the audio immediately.
       audioPlayer.pause();
+      audioPlayer.currentTime = 0;
       // Disable both buttons to prevent multiple clicks.
       btnAI.disabled = true;
       btnHuman.disabled = true;
