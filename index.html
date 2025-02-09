@@ -87,6 +87,28 @@
       margin: 2px;
       font-size: 14px;
     }
+    /* Mobile-friendly adjustments */
+    @media (max-width: 600px) {
+      .box {
+        margin: 10px;
+        padding: 15px;
+        width: 100%;
+      }
+      input[type="number"] {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      form div {
+        margin-bottom: 10px;
+      }
+      button {
+        width: 100%;
+        margin: 5px 0;
+      }
+      .rating-buttons button {
+        flex: 1 0 calc(20% - 4px); /* Adjust so fewer buttons per row if needed */
+      }
+    }
   </style>
 </head>
 <body>
@@ -366,8 +388,17 @@
           <input type="radio" id="listening4" name="listeningFrequency" value="${e.listeningOption4}" required>
           <label for="listening4">${s.listeningOption4}</label>
         </div>
-        <button type="submit" class="option">${s.submit}</button>
+        <button type="submit" class="option" id="surveySubmit" disabled>${s.submit}</button>
       `;
+      // Enable the submit button if the form is valid
+      preQuizForm.addEventListener('input', function() {
+        const submitBtn = document.getElementById('surveySubmit');
+        if (preQuizForm.checkValidity()) {
+          submitBtn.disabled = false;
+        } else {
+          submitBtn.disabled = true;
+        }
+      });
     }
 
     // -------------------------------
@@ -419,7 +450,7 @@
       // Create a rating section (buttons 1 to 10)
       const ratingDiv = document.createElement('div');
       ratingDiv.innerHTML = `<p>${quizTranslations[quizLanguage].ratingPrompt}</p>`;
-      // Create a flex container for rating buttons
+      // Create a flex container for the rating buttons
       const ratingButtonsContainer = document.createElement('div');
       ratingButtonsContainer.classList.add('rating-buttons');
       for (let i = 1; i <= 10; i++) {
@@ -436,8 +467,9 @@
           aiBtn.disabled = false;
           humanBtn.disabled = false;
         });
-        ratingDiv.appendChild(ratingBtn);
+        ratingButtonsContainer.appendChild(ratingBtn);
       }
+      ratingDiv.appendChild(ratingButtonsContainer);
       questionContainer.appendChild(ratingDiv);
 
       // Create a guess section
