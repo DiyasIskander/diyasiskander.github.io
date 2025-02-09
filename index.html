@@ -2,8 +2,14 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <!-- Mobile friendly viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI vs Human Music Quiz</title>
   <style>
+    /* Global styles */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: sans-serif;
       text-align: center;
@@ -14,13 +20,14 @@
     h1, h2 {
       margin-top: 0;
     }
-    /* Style for the small note below the title */
+    /* Small note below the title */
     #titleNote {
       font-size: 0.8em;
       color: #666;
       margin-top: -10px;
       margin-bottom: 20px;
     }
+    /* Containers for pages */
     #startScreen, #preQuizContainer, #quizContainer, #summaryContainer {
       margin-top: 30px;
     }
@@ -32,6 +39,7 @@
       border-radius: 8px;
       box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     }
+    /* Button styles */
     button {
       padding: 10px 20px;
       margin: 5px;
@@ -39,9 +47,6 @@
       cursor: pointer;
       border: none;
       border-radius: 4px;
-    }
-    button.option {
-      background-color: #ddd;
     }
     button.incorrect {
       background-color: #e74c3c;
@@ -52,7 +57,7 @@
       color: #fff;
     }
     .hidden {
-      display: none;
+      display: none !important;
     }
     input[type="number"] {
       padding: 5px;
@@ -76,19 +81,23 @@
       font-size: 1.1em;
       margin-top: 20px;
     }
-    /* New style: Flex container for rating buttons */
+    /* Flex container for rating buttons in wide screens: all in one row */
     .rating-buttons {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: space-between;
     }
     .rating-buttons button {
-      flex: 1 0 calc(10% - 4px); /* 10 buttons per row */
+      flex: 1 1 0;  /* Each button shares available space equally */
       margin: 2px;
       font-size: 14px;
     }
+    
     /* Mobile-friendly adjustments */
     @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
       .box {
         margin: 10px;
         padding: 15px;
@@ -96,7 +105,6 @@
       }
       input[type="number"] {
         width: 100%;
-        box-sizing: border-box;
       }
       form div {
         margin-bottom: 10px;
@@ -105,8 +113,21 @@
         width: 100%;
         margin: 5px 0;
       }
+      /* For rating buttons on small screens, wrap them into two rows */
+      .rating-buttons {
+        flex-wrap: wrap;
+      }
       .rating-buttons button {
-        flex: 1 0 calc(20% - 4px); /* Adjust so fewer buttons per row if needed */
+        flex: 1 0 calc(20% - 4px);  /* 5 buttons per row */
+      }
+      /* Make the welcome page fill the entire viewport height */
+      #startScreen {
+        height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin: 0;
+        padding: 20px;
       }
     }
   </style>
